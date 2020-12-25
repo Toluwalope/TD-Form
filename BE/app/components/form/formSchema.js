@@ -6,142 +6,144 @@ let formSchema = new Schema(
 		//all fields will be here
 		// userId: mongoose.Schema.Types.ObjectId
 		metaData: {
-			industry: '',
-			industryState: '',
-			otherIndustry: '',
-			otherIndustryState: '',
-			projectName: 'Beverly Cochran',
-			projectNameState: 'success',
-			contractType: '',
-			contractTypeState: '',
-			otherContractType: '',
-			otherContractTypeState: '',
-			hoursSupport: 'Adipisci reprehender',
-			hoursSupportState: 'success',
-			degreeSupport: '',
-			degreeSupportState: '',
-			disableOtherIndustry: true,
-			disableOtherContractType: true,
-			val: '',
-			emails: [ '2val@2val.com' ],
-			count: 1
+			industry: String,
+			industryState: String,
+			otherIndustry: String,
+			otherIndustryState: String,
+			projectName: String,
+			projectNameState: String,
+			contractType: String,
+			contractTypeState: String,
+			otherContractType: String,
+			otherContractTypeState: String,
+			hoursSupport: Number,
+			// hoursSupportState: 'success',
+			degreeSupport: String,
+			// degreeSupportState:String,
+			// disableOtherIndustry: Boolean,
+			// disableOtherContractType: Boolean,
+			// val: String,
+			//contact mean email etc.
+			contact: [ String ]
+			// count: [String]
 		},
 		projectDetails: {
-			projectType: 'New Award',
-			projectTypeState: '',
-			projectSubCategory: '',
-			projectSubCategoryState: '',
-			currency: '',
-			currencyState: ''
+			projectType: String,
+			// projectTypeState: '',
+			projectSubCategory: String,
+			// projectSubCategoryState: '',
+			currency: String
+			// currencyState: ''
 		},
 		projectTimeline: {
-			releaseDate: '2020-12-03T08:56:00.000Z',
-			responseDate: '2020-12-04T08:56:00.000Z',
-			negotiationSignOffDate: '2020-12-11T08:56:00.000Z',
-			supplierCommDate: '2020-12-24T08:56:00.000Z',
-			iniPlannedNegotiationEndDate: '2020-12-08T08:56:00.000Z',
-			negotiationStartDate: '2020-12-04T08:56:00.000Z',
-			negotiationEndDate: '2020-12-04T08:56:00.000Z'
+			// 2020-12-03T08:56:00.000Z'
+			releaseDate: Date,
+			responseDate: Date,
+			negotiationSignOffDate: Date,
+			supplierCommDate: Date,
+			iniPlannedNegotiationEndDate: Date,
+			negotiationStartDate: Date,
+			negotiationEndDate: Date
 		},
 		commercials: {
-			bestInitialTransferPrice: '',
-			bestInitialComparisonPrice: '',
-			finalComparisonPrice: '',
-			numberOfBaskets: 0,
-			numberOfBasketsState: '',
-			shorttermSavingsIncludedInCP: false,
-			shortTermSavingsYear1: '',
-			shortTermSavingsYear2: '',
-			shortTermSavingsYear3: '',
-			shortTermSavingsYear4: '',
-			shortTermSavingsYear5: '',
+			bestInitialTransferPrice: Number,
+			bestInitialComparisonPrice: Number,
+			finalComparisonPrice: Number,
+			numberOfBaskets: Number,
+			// numberOfBasketsState: '',
+			shorttermSavingsIncludedInCP: Boolean,
+			shortTermSavingsYear1: Number,
+			shortTermSavingsYear2: Number,
+			shortTermSavingsYear3: Number,
+			shortTermSavingsYear4: Number,
+			shortTermSavingsYear5: Number,
 			disable: true
 		},
 		commitment: {
-			bmConducted: false,
-			disableOtherPenalty: true,
-			varBmIncluded: false,
-			bmDecisionBasis: false,
-			transparencyDecisionBasis: '1',
-			commitmentToSetSuppliers: true,
-			commitmentToNegotiationProcess: '4',
-			commitmentToNegotiationOutcome: '2',
-			commitmentInSupplierComm: '2',
-			modeSupplierComm: '1',
-			deliverySupplierComm: '2',
-			modeNegotiationEvent: '2',
-			strategicImportanceForClient: ''
+			bmConducted: Boolean,
+			disableOtherPenalty: Boolean,
+			varBmIncluded: Boolean,
+			bmDecisionBasis: Boolean,
+			transparencyDecisionBasis: String,
+			commitmentToSetSuppliers: Boolean,
+			commitmentToNegotiationProcess: String,
+			commitmentToNegotiationOutcome: String,
+			commitmentInSupplierComm: String,
+			modeSupplierComm: String,
+			deliverySupplierComm: String,
+			modeNegotiationEvent: String,
+			strategicImportanceForClient: String
 		},
 		//competition would be nested
 		competition: {
 			baskets: [
 				{
-					shareCount: [
-						{
-							share: 'Dolorem voluptatem t'
-						}
-					],
-					shareCounter: 0,
-					finalTransfer: 'Cupiditate nulla con',
-					averageDistance: 'Laboriosam irure om',
-					deltaFirst: 'Deserunt quia qui qu',
-					bmLeader: true,
+					// shareCount: [
+					// 	{
+					// 		share: 'Dolorem voluptatem t'
+					// 	}
+					// ],
+					// shareCounter: 0,
+					finalTransfer: Number,
+					averageDistance: Number,
+					deltaFirst: Number,
+					bmLeader: Boolean,
 					averageBMScore: '',
-					rangeBMScore: 'Et ut quaerat neque ',
-					bmBenchmark: true,
-					noSuppliersRFQ: 'Veniam labore ipsa',
-					noOfSuppliersAdmitted: 'Beatae fugiat aperi',
-					noOfNeededSuppliers: '6',
-					sourceToMorethanOneSupplier: true,
-					methodOfNegotiation: '',
-					noOfSharesAwarded: '',
-					disableOnSourceLessThanOne: false
+					rangeBMScore: Number,
+					bmBenchmark: Boolean,
+					noSuppliersRFQ: Number,
+					noOfSuppliersAdmitted: Number,
+					noOfNeededSuppliers: Number,
+					sourceToMorethanOneSupplier: Boolean,
+					methodOfNegotiation: String,
+					noOfSharesAwarded: String,
+					disableOnSourceLessThanOne: Boolean
 				}
-			],
-			basketCount: 0,
-			sourceToMorethanOneSupplier: true,
-			bmBenchmark: true
+			]
+			// basketCount: 0,
+			// sourceToMorethanOneSupplier: true,
+			// bmBenchmark: true
 		},
 		negotiation: {
-			typeOfNegotiation: '',
-			degreeOfDeviation: '',
-			clientIntervention: '',
-			stagesOfNegotiationDesign: '',
-			designOfLastPlannedStage: '',
-			designOfLastConductedStage: '',
-			degreeOfInformationFeedback: '',
-			terminationPossibleBefore: false,
-			terminationDoneBefore: true,
-			distinctSupplierSet: true,
-			noOfDistinctSuppliers: '966',
-			riskOfCollusion: false,
-			noOfDistinctSuppliersState: 'success'
+			typeOfNegotiation: String,
+			degreeOfDeviation: String,
+			clientIntervention: String,
+			stagesOfNegotiationDesign: String,
+			designOfLastPlannedStage: String,
+			designOfLastConductedStage: String,
+			degreeOfInformationFeedback: String,
+			terminationPossibleBefore: Boolean,
+			terminationDoneBefore: Boolean,
+			distinctSupplierSet: Boolean,
+			noOfDistinctSuppliers: Number,
+			riskOfCollusion: Boolean
+			// noOfDistinctSuppliersState:
 		},
 		designElement: {
-			opportunityToQualifyForAnything: true,
-			shortlistingOfSupplier: false,
-			sealedBidRequote: true,
-			ranking: false,
-			englishLang: true,
-			dutchLang: false,
-			hongkongLang: true,
-			brazilianLang: false,
-			takeItOrX: true,
-			dummyPrice: true,
-			informationBuying: true,
-			takeItChain: true,
-			targetLine: false,
-			lastCall: false,
-			firstCall: true
+			opportunityToQualifyForAnything: Boolean,
+			shortlistingOfSupplier: Boolean,
+			sealedBidRequote: Boolean,
+			ranking: Boolean,
+			englishLang: Boolean,
+			dutchLang: Boolean,
+			hongkongLang: Boolean,
+			brazilianLang: Boolean,
+			takeItOrX: Boolean,
+			dummyPrice: Boolean,
+			informationBuying: Boolean,
+			takeItChain: Boolean,
+			targetLine: Boolean,
+			lastCall: Boolean,
+			firstCall: Boolean
 		},
 		others: {
-			allocationToolUsed: true,
-			sourcingCockpitUsed: false,
-			eAuctionPlatformUsed: true,
-			clientTCS: true,
-			forwardBundling: false,
-			changeManagement: true,
-			otherPostNomination: false
+			allocationToolUsed: Boolean,
+			sourcingCockpitUsed: Boolean,
+			eAuctionPlatformUsed: Boolean,
+			clientTCS: Boolean,
+			forwardBundling: Boolean,
+			changeManagement: Boolean,
+			otherPostNomination: Boolean
 		}
 	},
 	{
