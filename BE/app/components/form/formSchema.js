@@ -7,36 +7,22 @@ let formSchema = new Schema(
 		// userId: mongoose.Schema.Types.ObjectId
 		metaData: {
 			industry: String,
-			industryState: String,
 			otherIndustry: String,
-			otherIndustryState: String,
 			projectName: String,
-			projectNameState: String,
 			contractType: String,
-			contractTypeState: String,
 			otherContractType: String,
-			otherContractTypeState: String,
 			hoursSupport: Number,
-			// hoursSupportState: 'success',
 			degreeSupport: String,
-			// degreeSupportState:String,
-			// disableOtherIndustry: Boolean,
-			// disableOtherContractType: Boolean,
-			// val: String,
-			//contact mean email etc.
-			contact: [ String ]
-			// count: [String]
+			contact: [ String ],
 		},
 		projectDetails: {
 			projectType: String,
-			// projectTypeState: '',
 			projectSubCategory: String,
-			// projectSubCategoryState: '',
 			currency: String
-			// currencyState: ''
 		},
 		projectTimeline: {
 			// 2020-12-03T08:56:00.000Z'
+			// **TOLU**: we can save just the date and not the time
 			releaseDate: Date,
 			responseDate: Date,
 			negotiationSignOffDate: Date,
@@ -50,18 +36,15 @@ let formSchema = new Schema(
 			bestInitialComparisonPrice: Number,
 			finalComparisonPrice: Number,
 			numberOfBaskets: Number,
-			// numberOfBasketsState: '',
 			shorttermSavingsIncludedInCP: Boolean,
 			shortTermSavingsYear1: Number,
 			shortTermSavingsYear2: Number,
 			shortTermSavingsYear3: Number,
 			shortTermSavingsYear4: Number,
 			shortTermSavingsYear5: Number,
-			disable: true
 		},
 		commitment: {
 			bmConducted: Boolean,
-			disableOtherPenalty: Boolean,
 			varBmIncluded: Boolean,
 			bmDecisionBasis: Boolean,
 			transparencyDecisionBasis: String,
@@ -78,6 +61,7 @@ let formSchema = new Schema(
 		competition: {
 			baskets: [
 				{
+					// **TOLU**: You also have to define the share array
 					// shareCount: [
 					// 	{
 					// 		share: 'Dolorem voluptatem t'
@@ -88,7 +72,7 @@ let formSchema = new Schema(
 					averageDistance: Number,
 					deltaFirst: Number,
 					bmLeader: Boolean,
-					averageBMScore: '',
+					averageBMScore: String,
 					rangeBMScore: Number,
 					bmBenchmark: Boolean,
 					noSuppliersRFQ: Number,
@@ -96,13 +80,10 @@ let formSchema = new Schema(
 					noOfNeededSuppliers: Number,
 					sourceToMorethanOneSupplier: Boolean,
 					methodOfNegotiation: String,
-					noOfSharesAwarded: String,
-					disableOnSourceLessThanOne: Boolean
+					noOfSharesAwarded: String, // this should be calculated based on the number of shares created in that baskets (i.e. number of shares in the basket)
 				}
-			]
-			// basketCount: 0,
-			// sourceToMorethanOneSupplier: true,
-			// bmBenchmark: true
+			],
+			basketCount: Number,
 		},
 		negotiation: {
 			typeOfNegotiation: String,
@@ -117,7 +98,6 @@ let formSchema = new Schema(
 			distinctSupplierSet: Boolean,
 			noOfDistinctSuppliers: Number,
 			riskOfCollusion: Boolean
-			// noOfDistinctSuppliersState:
 		},
 		designElement: {
 			opportunityToQualifyForAnything: Boolean,
