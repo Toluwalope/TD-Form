@@ -12,13 +12,14 @@ import dbConnection from './app/components/db_connection/index.js';
 //***********************Database Connection SECTION EndS FROM HERE***********************
 //***********************API'S SECTION STARTS FROM HERE***********************
 import formRouter from './app/components/form/formRoutes.js';
+import competationRouter from './app/components/form/competation/competationRoutes.js';
 //***********************API'S SECTION EndS FROM HERE***********************
 const app = express();
 import path from 'path';
 const __dirname = path.resolve();
 app.use(bodyParser.json());
 app.use(cors());
-app.use('/api', [ formRouter ]);
+app.use('/api', [ formRouter, competationRouter ]);
 // app.use(
 // 	cors({
 // 		origin: process.env.origin,
@@ -39,7 +40,7 @@ if (process.env.NODE_ENV === 'production') {
 	});
 }
 
-let port = process.env.PORT || 3000;
+let port = process.env.PORT || 4000;
 
 app
 	.listen(port, function() {

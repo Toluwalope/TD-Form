@@ -13,7 +13,7 @@ let formSchema = new Schema(
 			otherContractType: String,
 			hoursSupport: Number,
 			degreeSupport: String,
-			contact: [ String ],
+			contact: [ String ]
 		},
 		projectDetails: {
 			projectType: String,
@@ -41,7 +41,7 @@ let formSchema = new Schema(
 			shortTermSavingsYear2: Number,
 			shortTermSavingsYear3: Number,
 			shortTermSavingsYear4: Number,
-			shortTermSavingsYear5: Number,
+			shortTermSavingsYear5: Number
 		},
 		commitment: {
 			bmConducted: Boolean,
@@ -56,34 +56,6 @@ let formSchema = new Schema(
 			deliverySupplierComm: String,
 			modeNegotiationEvent: String,
 			strategicImportanceForClient: String
-		},
-		//competition would be nested
-		competition: {
-			baskets: [
-				{
-					// **TOLU**: You also have to define the share array
-					// shareCount: [
-					// 	{
-					// 		share: 'Dolorem voluptatem t'
-					// 	}
-					// ],
-					// shareCounter: 0,
-					finalTransfer: Number,
-					averageDistance: Number,
-					deltaFirst: Number,
-					bmLeader: Boolean,
-					averageBMScore: String,
-					rangeBMScore: Number,
-					bmBenchmark: Boolean,
-					noSuppliersRFQ: Number,
-					noOfSuppliersAdmitted: Number,
-					noOfNeededSuppliers: Number,
-					sourceToMorethanOneSupplier: Boolean,
-					methodOfNegotiation: String,
-					noOfSharesAwarded: String, // this should be calculated based on the number of shares created in that baskets (i.e. number of shares in the basket)
-				}
-			],
-			basketCount: Number,
 		},
 		negotiation: {
 			typeOfNegotiation: String,
@@ -124,7 +96,13 @@ let formSchema = new Schema(
 			forwardBundling: Boolean,
 			changeManagement: Boolean,
 			otherPostNomination: Boolean
-		}
+		},
+		competition: [
+			{
+				type: Schema.Types.ObjectId,
+				ref: 'competition'
+			}
+		]
 	},
 	{
 		timestamps: true
