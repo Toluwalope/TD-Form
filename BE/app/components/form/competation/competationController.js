@@ -4,7 +4,7 @@ import Form from './../formSchema.js';
 import errorHandler from '../../../utils/errorHandler/index.js';
 
 class CompetitionController {
-	//add form step 2
+	//Add form step 2
 	addCompetition = async (req, res) => {
 		try {
 			let competitions = req.body.competition;
@@ -43,6 +43,67 @@ class CompetitionController {
 			}
 			return res.status(200).json({
 				code: 200,
+				response: response
+			});
+		} catch (error) {
+			errorHandler(res, error);
+		}
+	};
+
+	//Get the competation
+	getCompetation = async (req, res) => {
+		try {
+			const competitionId = req.params.competitionId;
+			let response = await Competition.findById(competitionId);
+			return res.status(200).json({
+				code: 200,
+				response: response
+			});
+		} catch (error) {
+			errorHandler(res, error);
+		}
+	};
+
+	//Update competation
+	updateCompetation = async (req, res) => {
+		try {
+			const competitionId = req.params.competitionId;
+			let response = await Competition.findOneAndUpdate(
+				{
+					_id: competitionId
+				},
+				{
+					$set: req.body
+				},
+				{
+					new: true
+				}
+			);
+			return res.status(200).json({
+				code: 200,
+				message: 'Updated Successfully!!! :)',
+				response: response
+			});
+		} catch (error) {
+			errorHandler(res, error);
+		}
+	};
+
+	//Delete competation
+	deleteCompetition = async (req, res) => {
+		try {
+			let competitionId = req.params.competitionId;
+			let response = await Competition.findByIdAndRemove(competitionId);
+			let currentFormId = response.formId;
+			let currentForm = await Form.findById(currentFormId);
+			let index = await currentForm.competition.indexOf(competitionId);
+			if (index !== -1) {
+				await currentForm.competition.splice(index, 1);
+				await currentForm.save();
+			}
+			return res.status(200).json({
+				code: 200,
+				message: 'Deleted Successfully!!! :)',
 				response: response
 			});
 		} catch (error) {

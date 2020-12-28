@@ -3,8 +3,7 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 let formSchema = new Schema(
 	{
-		//all fields will be here
-		// userId: mongoose.Schema.Types.ObjectId
+		// userId: mongoose.Schema.Types.ObjectId  ***LAST MILESTONE***
 		metaData: {
 			industry: String,
 			otherIndustry: String,

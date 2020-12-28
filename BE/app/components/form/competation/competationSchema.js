@@ -29,7 +29,7 @@ let competitionSchema = new Schema(
 		noOfNeededSuppliers: Number,
 		sourceToMorethanOneSupplier: Boolean,
 		methodOfNegotiation: String,
-		noOfSharesAwarded: String // this should be calculated based on the number of shares created in that baskets (i.e. number of shares in the basket)
+		noOfSharesAwarded: String //***ZIA==> DISCUSS THIS IN MEETING :)*** this should be calculated based on the number of shares created in that baskets (i.e. number of shares in the basket)
 	},
 	{
 		timestamps: true
