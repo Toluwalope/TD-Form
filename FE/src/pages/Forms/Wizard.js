@@ -18,6 +18,7 @@ import Others from './WizardSteps/Others.js';
 export default function WizardView(props) {
 	const handleSubmit = (e) => {
 		console.log(props);
+		alert('hello');
 		alert(JSON.stringify(props));
 	};
 
