@@ -57,6 +57,7 @@ export default function WizardView() {
   const handleSubmit = (props) => {
     const headers = Object.keys(props.allStates);
     const arr = [...headers.map((header) => props.allStates?.[header])];
+    console.log(arr);
     let keyValuePairs = Object.assign({}, ...arr);
     keyValuePairs = Object.entries(keyValuePairs).map(([key, value]) => {
       return { name: key, value: value };
@@ -148,7 +149,7 @@ export default function WizardView() {
                 color="primary"
                 onClick={handleClose}
               >
-                Cancle
+                Cancel
               </Button>
             </p>
           </div>

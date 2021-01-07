@@ -6,11 +6,7 @@ let competitionSchema = new Schema(
 		//competition would be nested
 		// **TOLU**: You also have to define the share array, discuss in a meeting
 		//**ZIA **/ things I done are necessary
-		// shareCount: [
-		// 	{
-		// 		share: 'Dolorem voluptatem t'
-		// 	}
-		// ],
+		shareCount: [],
 		// shareCounter: 0,
 		formId: mongoose.Schema.Types.ObjectId,
 		form: {

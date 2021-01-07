@@ -13,6 +13,7 @@ class CompetitionController {
 				return {
 					formId: formId,
 					form: formId,
+					shareCount: x.shareCount,
 					finalTransfer: x.finalTransfer,
 					averageDistance: x.averageDistance,
 					deltaFirst: x.deltaFirst,
