@@ -14,6 +14,7 @@ class FormController {
 				response: response
 			});
 		} catch (error) {
+			console.log(error);
 			errorHandler(res, error);
 		}
 	};

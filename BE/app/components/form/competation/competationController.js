@@ -9,44 +9,49 @@ class CompetitionController {
 		try {
 			let competitions = req.body.competition;
 			let formId = req.body.formId;
-			let competitionsArray = competitions.map((x) => {
-				return {
-					formId: formId,
-					form: formId,
-					shareCount: x.shareCount,
-					finalTransfer: x.finalTransfer,
-					averageDistance: x.averageDistance,
-					deltaFirst: x.deltaFirst,
-					bmLeader: x.bmLeader,
-					averageBMScore: x.averageBMScore,
-					rangeBMScore: x.rangeBMScore,
-					bmBenchmark: x.bmBenchmark,
-					noSuppliersRFQ: x.noSuppliersRFQ,
-					noOfSuppliersAdmitted: x.noOfSuppliersAdmitted,
-					noOfNeededSuppliers: x.noOfNeededSuppliers,
-					sourceToMorethanOneSupplier: x.sourceToMorethanOneSupplier,
-					methodOfNegotiation: x.methodOfNegotiation,
-					noOfSharesAwarded: x.noOfSharesAwarded
-				};
-			});
-
-			let response = await Competition.insertMany(competitionsArray);
-			let currentForm = await Form.findById(formId);
-			let ids = [];
-			let responseId = response.map((x) => {
-				let id = x._id;
-				ids.push(id);
-			});
-			for (let index = 0; index < ids.length; index++) {
-				const element = ids[index];
-				currentForm.competition.push(element);
-				await currentForm.save();
+			for (let index = 0; index < competitions.length; index++) {
+				// console.log(`itertraing ${index + 1} times`);
+				let competitionsArray = competitions[index].map((x, index) => {
+					return {
+						formId: formId,
+						form: formId,
+						shareCount: x.shareCount,
+						finalTransfer: x.finalTransfer,
+						averageDistance: x.averageDistance,
+						deltaFirst: x.deltaFirst,
+						bmLeader: x.bmLeader,
+						averageBMScore: x.averageBMScore,
+						rangeBMScore: x.rangeBMScore,
+						bmBenchmark: x.bmBenchmark,
+						noSuppliersRFQ: x.noSuppliersRFQ,
+						noOfSuppliersAdmitted: x.noOfSuppliersAdmitted,
+						noOfNeededSuppliers: x.noOfNeededSuppliers,
+						sourceToMorethanOneSupplier: x.sourceToMorethanOneSupplier,
+						methodOfNegotiation: x.methodOfNegotiation,
+						noOfSharesAwarded: x.noOfSharesAwarded
+					};
+				});
+				let response = await Competition.insertMany(competitionsArray);
+				let currentForm = await Form.findById(formId);
+				let ids = [];
+				let responseId = response.map((x) => {
+					let id = x._id;
+					ids.push(id);
+				});
+				for (let index = 0; index < ids.length; index++) {
+					const element = ids[index];
+					currentForm.competition.push(element);
+					await currentForm.save();
+				}
+				if (index == competitions.length - 1) {
+					return res.status(200).json({
+						code: 200,
+						response: response
+					});
+				}
 			}
-			return res.status(200).json({
-				code: 200,
-				response: response
-			});
 		} catch (error) {
+			console.log(error);
 			errorHandler(res, error);
 		}
 	};

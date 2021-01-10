@@ -19,7 +19,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import Fade from "@material-ui/core/Fade";
 import Table from "../../components/Table/Table";
-import axios from "axios";
+import { addFormStepOne, addFormStepTwo } from "./../../services/formService"
+// import axios from "axios";
 import { Button } from "@material-ui/core";
 
 function getModalStyle() {
@@ -65,9 +66,68 @@ export default function WizardView() {
     setData({ keyValuePairs, props });
     handleOpen();
   };
+
+  const extractValue = (arr, prop) => {
+    let extractedValue = [];
+    for (let i = 0; i < arr.length; ++i) {
+      // extract value from property
+      extractedValue.push(arr[i][prop]);
+    }
+    return extractedValue;
+  }
   const sendDataToBackend = async () => {
     //!DO THE BACKEND INTEGRATION HERE
-    console.log(data.props); //showing the state
+    // console.log(data.props); //showing the state
+    try {
+      let metaData = data.props.allStates.metaData;
+      let projectDetails = data.props.allStates.metaData;
+      let projectTimeline = data.props.allStates.projectTimeline;
+      let commercials = data.props.allStates.commercials;
+      let commitment = data.props.allStates.commitment;
+      let negotiation = data.props.allStates.negotiation;
+      let designElement = data.props.allStates.designElement;
+      let others = data.props.allStates.others;
+      let response = await addFormStepOne(metaData, projectDetails, projectTimeline, commercials, commitment, negotiation, designElement, others);
+      if (response.status === 200) {
+        let id = response.data.response._id;
+        let unSortedCompetition = data.props.allStates.competition;
+        let competition = unSortedCompetition.baskets.map((comp, index) => {
+          let competitions = [];
+          //SC FOR SHARE COUNT
+          let sC = [];
+          let dataObject = [...comp.shareCount];
+          const result = extractValue(dataObject, 'share');
+          sC.push(result);
+          let resultedObj = {
+            shareCount: [...sC],
+            finalTransfer: comp.finalTransfer,
+            averageDistance: comp.averageDistance,
+            deltaFirst: comp.deltaFirst,
+            bmLeader: comp.ButtonbmLeader,
+            averageBMScore: comp.averageBMScore,
+            rangeBMScore: comp.rangeBMScore,
+            bmBenchmark: comp.bmBenchmark,
+            noSuppliersRFQ: comp.noSuppliersRFQ,
+            noOfSuppliersAdmitted: comp.noOfSuppliersAdmitted,
+            noOfNeededSuppliers: comp.noOfNeededSuppliers,
+            sourceToMorethanOneSupplier: comp.sourceToMorethanOneSupplier,
+            methodOfNegotiation: comp.methodOfNegotiation,
+            noOfSharesAwarded: comp.noOfSharesAwarded
+          };
+          competitions.push(resultedObj);
+          return competitions;
+        });
+        let responseStepTwo = await addFormStepTwo(id, competition);
+        if (responseStepTwo.status === 200) {
+          handleClose();
+          alert("Form Saved SuccessFully!!!");
+          return;
+        }
+      }
+    } catch (error) {
+      alert(error);
+      console.log(error)
+    }
   };
 
   return (

@@ -20,12 +20,12 @@ const __dirname = path.resolve();
 app.use(bodyParser.json());
 app.use(cors());
 app.use('/api', [ formRouter, competationRouter ]);
-// app.use(
-// 	cors({
-// 		origin: process.env.origin,
-// 		credentials: true
-// 	})
-// );
+app.use(
+	cors({
+		origin: process.env.origin,
+		credentials: true
+	})
+);
 
 // app.use(express.static('UITemporary'));
 
