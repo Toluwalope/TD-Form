@@ -12,7 +12,7 @@ let formSchema = new Schema(
 			otherContractType: String,
 			hoursSupport: Number,
 			degreeSupport: String,
-			contact: []
+			emails: []
 		},
 		projectDetails: {
 			projectType: String,
