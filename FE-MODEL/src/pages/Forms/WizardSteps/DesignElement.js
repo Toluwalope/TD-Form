@@ -1,98 +1,105 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react'
+import PropTypes from 'prop-types'
 // @material-ui/core components
-import withStyles from "@material-ui/core/styles/withStyles";
+import withStyles from '@material-ui/core/styles/withStyles'
 
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Switch from "@material-ui/core/Switch";
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import Switch from '@material-ui/core/Switch'
 
 // core components
-import GridContainer from "../../../components/Grid/GridContainer.js";
-import GridItem from "../../../components/Grid/GridItem.js";
+import GridContainer from '../../../components/Grid/GridContainer.js'
+import GridItem from '../../../components/Grid/GridItem.js'
 
-import customSelectStyle from "../../../assets/jss/material-dashboard-pro-react/customSelectStyle.js";
-import customCheckboxRadioSwitch from "../../../assets/jss/material-dashboard-pro-react/customCheckboxRadioSwitch.js";
+import customSelectStyle from '../../../assets/jss/material-dashboard-pro-react/customSelectStyle.js'
+import customCheckboxRadioSwitch from '../../../assets/jss/material-dashboard-pro-react/customCheckboxRadioSwitch.js'
 
-
-import { Typography } from "@material-ui/core";
+import { Typography } from '@material-ui/core'
 
 const style = {
   infoText: {
-    fontWeight: "300",
-    margin: "10px 0 30px",
-    textAlign: "center",
+    fontWeight: '300',
+    margin: '10px 0 30px',
+    textAlign: 'center',
   },
   inputAdornmentIcon: {
-    color: "#555",
+    color: '#555',
   },
   choiche: {
-    textAlign: "center",
-    cursor: "pointer",
-    marginTop: "20px",
+    textAlign: 'center',
+    cursor: 'pointer',
+    marginTop: '20px',
   },
   ...customSelectStyle,
   ...customCheckboxRadioSwitch,
-};
+}
 
 class DesignElement extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
-      opportunityToQualifyForAnything: true,
-      shortlistingOfSupplier: true,
-      sealedBidRequote: true,
-      ranking: true,
-      englishLang: true,
-      dutchLang: true,
-      hongkongLang: true,
-      brazilianLang: true,
-      takeItOrX: true,
-      dummyPrice: true,
-      informationBuying: true,
-      takeItChain: true,
-      targetLine: true,
-      lastCall: true,
-      firstCall: true,
-    };
+      opportunityToQualifyForAnything: this.props.data
+        ? this.props.data.opportunityToQualifyForAnything
+        : true,
+      shortlistingOfSupplier: this.props.data
+        ? this.props.data.shortlistingOfSupplier
+        : true,
+      sealedBidRequote: this.props.data
+        ? this.props.data.sealedBidRequote
+        : true,
+      ranking: this.props.data ? this.props.data.ranking : true,
+      englishLang: this.props.data ? this.props.data.englishLang : true,
+      dutchLang: this.props.data ? this.props.data.dutchLang : true,
+      hongkongLang: this.props.data ? this.props.data.hongkongLang : true,
+      brazilianLang: this.props.data ? this.props.data.brazilianLang : true,
+      takeItOrX: this.props.data ? this.props.data.takeItOrX : true,
+      dummyPrice: this.props.data ? this.props.data.dummyPrice : true,
+      informationBuying: this.props.data
+        ? this.props.data.informationBuying
+        : true,
+      takeItChain: this.props.data ? this.props.data.takeItChain : true,
+      targetLine: this.props.data ? this.props.data.targetLine : true,
+      lastCall: this.props.data ? this.props.data.lastCall : true,
+      firstCall: this.props.data ? this.props.data.firstCall : true,
+    }
   }
   sendState() {
-    return this.state;
+    return this.state
   }
   // function that returns true if value is email, false otherwise
   verifyEmail(value) {
-    var emailRex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    var emailRex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     if (emailRex.test(value)) {
-      return true;
+      return true
     }
-    return false;
+    return false
   }
   // function that verifies if a string has a given length or not
   verifyLength(value, length) {
     if (value.length >= length) {
-      return true;
+      return true
     }
-    return false;
+    return false
   }
   change(event, stateName, type, stateNameEqualTo) {
     switch (type) {
-      case "email":
+      case 'email':
         if (this.verifyEmail(event.target.value)) {
-          this.setState({ [stateName + "State"]: "success" });
+          this.setState({ [stateName + 'State']: 'success' })
         } else {
-          this.setState({ [stateName + "State"]: "error" });
+          this.setState({ [stateName + 'State']: 'error' })
         }
-        break;
-      case "length":
+        break
+      case 'length':
         if (this.verifyLength(event.target.value, stateNameEqualTo)) {
-          this.setState({ [stateName + "State"]: "success" });
+          this.setState({ [stateName + 'State']: 'success' })
         } else {
-          this.setState({ [stateName + "State"]: "error" });
+          this.setState({ [stateName + 'State']: 'error' })
         }
-        break;
+        break
       default:
-        break;
+        break
     }
-    this.setState({ [stateName]: event.target.value });
+    this.setState({ [stateName]: event.target.value })
   }
   isValidated() {
     {
@@ -116,17 +123,17 @@ class DesignElement extends React.Component {
     }
     */
     }
-    return true;
+    return true
   }
 
   handleChange = (event, nameState) => {
-    this.setState({ [nameState]: event.target.value });
-  };
+    this.setState({ [nameState]: event.target.value })
+  }
 
   render() {
-    const { classes } = this.props;
+    const { classes } = this.props
     return (
-      <GridContainer justify="center">
+      <GridContainer justify='center'>
         <GridItem xs={12} sm={12}>
           <h4 className={classes.infoText}>
             Please enter your project design elements
@@ -136,9 +143,9 @@ class DesignElement extends React.Component {
           <GridContainer
             xs={12}
             sm={12}
-            direction="row"
-            alignItems="center"
-            style={{ padding: "18px 0px 0px 0px" }}
+            direction='row'
+            alignItems='center'
+            style={{ padding: '18px 0px 0px 0px' }}
           >
             <GridItem xs={10}>
               <FormControlLabel
@@ -150,7 +157,7 @@ class DesignElement extends React.Component {
                         opportunityToQualifyForAnything: event.target.checked,
                       })
                     }
-                    value="opportunityToQualifyForAnything"
+                    value='opportunityToQualifyForAnything'
                     classes={{
                       switchBase: classes.switchBase,
                       checked: classes.switchChecked,
@@ -162,19 +169,22 @@ class DesignElement extends React.Component {
                 classes={{
                   label: classes.label,
                 }}
-                label={<Typography style={{fontSize: "12px"}}>Opportunity to Qualify for Anything</Typography>}
+                label={
+                  <Typography style={{ fontSize: '12px' }}>
+                    Opportunity to Qualify for Anything
+                  </Typography>
+                }
               />
             </GridItem>
-           
           </GridContainer>
         </GridItem>
         <GridItem xs={12} sm={5}>
           <GridContainer
             xs={12}
             sm={12}
-            direction="row"
-            alignItems="center"
-            style={{ padding: "18px 0px 0px 0px" }}
+            direction='row'
+            alignItems='center'
+            style={{ padding: '18px 0px 0px 0px' }}
           >
             <GridItem xs={10}>
               <FormControlLabel
@@ -186,7 +196,7 @@ class DesignElement extends React.Component {
                         shortlistingOfSupplier: event.target.checked,
                       })
                     }
-                    value="shortlistingOfSupplier"
+                    value='shortlistingOfSupplier'
                     classes={{
                       switchBase: classes.switchBase,
                       checked: classes.switchChecked,
@@ -198,19 +208,22 @@ class DesignElement extends React.Component {
                 classes={{
                   label: classes.label,
                 }}
-                label={<Typography style={{fontSize: "12px"}}>Short-Listing of Supplier(s)</Typography>}
+                label={
+                  <Typography style={{ fontSize: '12px' }}>
+                    Short-Listing of Supplier(s)
+                  </Typography>
+                }
               />
             </GridItem>
-           
           </GridContainer>
         </GridItem>
         <GridItem xs={12} sm={5}>
           <GridContainer
             xs={12}
             sm={12}
-            direction="row"
-            alignItems="center"
-            style={{ padding: "18px 0px 0px 0px" }}
+            direction='row'
+            alignItems='center'
+            style={{ padding: '18px 0px 0px 0px' }}
           >
             <GridItem xs={10}>
               <FormControlLabel
@@ -220,7 +233,7 @@ class DesignElement extends React.Component {
                     onChange={(event) =>
                       this.setState({ sealedBidRequote: event.target.checked })
                     }
-                    value="sealedBidRequote"
+                    value='sealedBidRequote'
                     classes={{
                       switchBase: classes.switchBase,
                       checked: classes.switchChecked,
@@ -232,19 +245,22 @@ class DesignElement extends React.Component {
                 classes={{
                   label: classes.label,
                 }}
-                label={<Typography style={{fontSize: "12px"}}>Sealed-Bid/Requote</Typography>}
+                label={
+                  <Typography style={{ fontSize: '12px' }}>
+                    Sealed-Bid/Requote
+                  </Typography>
+                }
               />
             </GridItem>
-           
           </GridContainer>
         </GridItem>
         <GridItem xs={12} sm={5}>
           <GridContainer
             xs={12}
             sm={12}
-            direction="row"
-            alignItems="center"
-            style={{ padding: "18px 0px 0px 0px" }}
+            direction='row'
+            alignItems='center'
+            style={{ padding: '18px 0px 0px 0px' }}
           >
             <GridItem xs={10}>
               <FormControlLabel
@@ -254,7 +270,7 @@ class DesignElement extends React.Component {
                     onChange={(event) =>
                       this.setState({ ranking: event.target.checked })
                     }
-                    value="ranking"
+                    value='ranking'
                     classes={{
                       switchBase: classes.switchBase,
                       checked: classes.switchChecked,
@@ -266,19 +282,20 @@ class DesignElement extends React.Component {
                 classes={{
                   label: classes.label,
                 }}
-                label={<Typography style={{fontSize: "12px"}}>Ranking</Typography>}
+                label={
+                  <Typography style={{ fontSize: '12px' }}>Ranking</Typography>
+                }
               />
             </GridItem>
-           
           </GridContainer>
         </GridItem>
         <GridItem xs={12} sm={5}>
           <GridContainer
             xs={12}
             sm={12}
-            direction="row"
-            alignItems="center"
-            style={{ padding: "18px 0px 0px 0px" }}
+            direction='row'
+            alignItems='center'
+            style={{ padding: '18px 0px 0px 0px' }}
           >
             <GridItem xs={10}>
               <FormControlLabel
@@ -288,7 +305,7 @@ class DesignElement extends React.Component {
                     onChange={(event) =>
                       this.setState({ englishLang: event.target.checked })
                     }
-                    value="englishLang"
+                    value='englishLang'
                     classes={{
                       switchBase: classes.switchBase,
                       checked: classes.switchChecked,
@@ -300,19 +317,20 @@ class DesignElement extends React.Component {
                 classes={{
                   label: classes.label,
                 }}
-                label={<Typography style={{fontSize: "12px"}}>English</Typography>}
+                label={
+                  <Typography style={{ fontSize: '12px' }}>English</Typography>
+                }
               />
             </GridItem>
-           
           </GridContainer>
         </GridItem>
         <GridItem xs={12} sm={5}>
           <GridContainer
             xs={12}
             sm={12}
-            direction="row"
-            alignItems="center"
-            style={{ padding: "18px 0px 0px 0px" }}
+            direction='row'
+            alignItems='center'
+            style={{ padding: '18px 0px 0px 0px' }}
           >
             <GridItem xs={10}>
               <FormControlLabel
@@ -322,7 +340,7 @@ class DesignElement extends React.Component {
                     onChange={(event) =>
                       this.setState({ dutchLang: event.target.checked })
                     }
-                    value="dutchLang"
+                    value='dutchLang'
                     classes={{
                       switchBase: classes.switchBase,
                       checked: classes.switchChecked,
@@ -334,19 +352,20 @@ class DesignElement extends React.Component {
                 classes={{
                   label: classes.label,
                 }}
-                label={<Typography style={{fontSize: "12px"}}>Dutch</Typography>}
+                label={
+                  <Typography style={{ fontSize: '12px' }}>Dutch</Typography>
+                }
               />
             </GridItem>
-            
           </GridContainer>
         </GridItem>
         <GridItem xs={12} sm={5}>
           <GridContainer
             xs={12}
             sm={12}
-            direction="row"
-            alignItems="center"
-            style={{ padding: "18px 0px 0px 0px" }}
+            direction='row'
+            alignItems='center'
+            style={{ padding: '18px 0px 0px 0px' }}
           >
             <GridItem xs={10}>
               <FormControlLabel
@@ -356,7 +375,7 @@ class DesignElement extends React.Component {
                     onChange={(event) =>
                       this.setState({ hongkongLang: event.target.checked })
                     }
-                    value="hongkongLang"
+                    value='hongkongLang'
                     classes={{
                       switchBase: classes.switchBase,
                       checked: classes.switchChecked,
@@ -368,19 +387,22 @@ class DesignElement extends React.Component {
                 classes={{
                   label: classes.label,
                 }}
-                label={<Typography style={{fontSize: "12px"}}>Hong-Kong</Typography>}
+                label={
+                  <Typography style={{ fontSize: '12px' }}>
+                    Hong-Kong
+                  </Typography>
+                }
               />
             </GridItem>
-           
           </GridContainer>
         </GridItem>
         <GridItem xs={12} sm={5}>
           <GridContainer
             xs={12}
             sm={12}
-            direction="row"
-            alignItems="center"
-            style={{ padding: "18px 0px 0px 0px" }}
+            direction='row'
+            alignItems='center'
+            style={{ padding: '18px 0px 0px 0px' }}
           >
             <GridItem xs={10}>
               <FormControlLabel
@@ -390,7 +412,7 @@ class DesignElement extends React.Component {
                     onChange={(event) =>
                       this.setState({ brazilianLang: event.target.checked })
                     }
-                    value="brazilianLang"
+                    value='brazilianLang'
                     classes={{
                       switchBase: classes.switchBase,
                       checked: classes.switchChecked,
@@ -402,19 +424,22 @@ class DesignElement extends React.Component {
                 classes={{
                   label: classes.label,
                 }}
-                label={<Typography style={{fontSize: "12px"}}>Brazilian</Typography>}
+                label={
+                  <Typography style={{ fontSize: '12px' }}>
+                    Brazilian
+                  </Typography>
+                }
               />
             </GridItem>
-           
           </GridContainer>
         </GridItem>
         <GridItem xs={12} sm={5}>
           <GridContainer
             xs={12}
             sm={12}
-            direction="row"
-            alignItems="center"
-            style={{ padding: "18px 0px 0px 0px" }}
+            direction='row'
+            alignItems='center'
+            style={{ padding: '18px 0px 0px 0px' }}
           >
             <GridItem xs={10}>
               <FormControlLabel
@@ -424,7 +449,7 @@ class DesignElement extends React.Component {
                     onChange={(event) =>
                       this.setState({ takeItOrX: event.target.checked })
                     }
-                    value="takeItOrX"
+                    value='takeItOrX'
                     classes={{
                       switchBase: classes.switchBase,
                       checked: classes.switchChecked,
@@ -436,19 +461,22 @@ class DesignElement extends React.Component {
                 classes={{
                   label: classes.label,
                 }}
-                label={<Typography style={{fontSize: "12px"}}>Take-It-Or-X</Typography>}
+                label={
+                  <Typography style={{ fontSize: '12px' }}>
+                    Take-It-Or-X
+                  </Typography>
+                }
               />
             </GridItem>
-            
           </GridContainer>
         </GridItem>
         <GridItem xs={12} sm={5}>
           <GridContainer
             xs={12}
             sm={12}
-            direction="row"
-            alignItems="center"
-            style={{ padding: "18px 0px 0px 0px" }}
+            direction='row'
+            alignItems='center'
+            style={{ padding: '18px 0px 0px 0px' }}
           >
             <GridItem xs={10}>
               <FormControlLabel
@@ -458,7 +486,7 @@ class DesignElement extends React.Component {
                     onChange={(event) =>
                       this.setState({ dummyPrice: event.target.checked })
                     }
-                    value="dummyPrice"
+                    value='dummyPrice'
                     classes={{
                       switchBase: classes.switchBase,
                       checked: classes.switchChecked,
@@ -470,19 +498,22 @@ class DesignElement extends React.Component {
                 classes={{
                   label: classes.label,
                 }}
-                label={<Typography style={{fontSize: "12px"}}>Dummy Prices</Typography>}
+                label={
+                  <Typography style={{ fontSize: '12px' }}>
+                    Dummy Prices
+                  </Typography>
+                }
               />
             </GridItem>
-            
           </GridContainer>
         </GridItem>
         <GridItem xs={12} sm={5}>
           <GridContainer
             xs={12}
             sm={12}
-            direction="row"
-            alignItems="center"
-            style={{ padding: "18px 0px 0px 0px" }}
+            direction='row'
+            alignItems='center'
+            style={{ padding: '18px 0px 0px 0px' }}
           >
             <GridItem xs={10}>
               <FormControlLabel
@@ -492,7 +523,7 @@ class DesignElement extends React.Component {
                     onChange={(event) =>
                       this.setState({ informationBuying: event.target.checked })
                     }
-                    value="informationBuying"
+                    value='informationBuying'
                     classes={{
                       switchBase: classes.switchBase,
                       checked: classes.switchChecked,
@@ -504,19 +535,22 @@ class DesignElement extends React.Component {
                 classes={{
                   label: classes.label,
                 }}
-                label={<Typography style={{fontSize: "12px"}}>Information Buying</Typography>}
+                label={
+                  <Typography style={{ fontSize: '12px' }}>
+                    Information Buying
+                  </Typography>
+                }
               />
             </GridItem>
-           
           </GridContainer>
         </GridItem>
         <GridItem xs={12} sm={5}>
           <GridContainer
             xs={12}
             sm={12}
-            direction="row"
-            alignItems="center"
-            style={{ padding: "18px 0px 0px 0px" }}
+            direction='row'
+            alignItems='center'
+            style={{ padding: '18px 0px 0px 0px' }}
           >
             <GridItem xs={10}>
               <FormControlLabel
@@ -526,7 +560,7 @@ class DesignElement extends React.Component {
                     onChange={(event) =>
                       this.setState({ takeItChain: event.target.checked })
                     }
-                    value="takeItChain"
+                    value='takeItChain'
                     classes={{
                       switchBase: classes.switchBase,
                       checked: classes.switchChecked,
@@ -538,19 +572,22 @@ class DesignElement extends React.Component {
                 classes={{
                   label: classes.label,
                 }}
-                label={<Typography style={{fontSize: "12px"}}>Take-It-Chain</Typography>}
+                label={
+                  <Typography style={{ fontSize: '12px' }}>
+                    Take-It-Chain
+                  </Typography>
+                }
               />
             </GridItem>
-           
           </GridContainer>
         </GridItem>
         <GridItem xs={12} sm={5}>
           <GridContainer
             xs={12}
             sm={12}
-            direction="row"
-            alignItems="center"
-            style={{ padding: "18px 0px 0px 0px" }}
+            direction='row'
+            alignItems='center'
+            style={{ padding: '18px 0px 0px 0px' }}
           >
             <GridItem xs={10}>
               <FormControlLabel
@@ -560,7 +597,7 @@ class DesignElement extends React.Component {
                     onChange={(event) =>
                       this.setState({ targetLine: event.target.checked })
                     }
-                    value="targetLine"
+                    value='targetLine'
                     classes={{
                       switchBase: classes.switchBase,
                       checked: classes.switchChecked,
@@ -572,19 +609,22 @@ class DesignElement extends React.Component {
                 classes={{
                   label: classes.label,
                 }}
-                label={<Typography style={{fontSize: "12px"}}>Target Line</Typography>}
+                label={
+                  <Typography style={{ fontSize: '12px' }}>
+                    Target Line
+                  </Typography>
+                }
               />
             </GridItem>
-           
           </GridContainer>
         </GridItem>
         <GridItem xs={12} sm={5}>
           <GridContainer
             xs={12}
             sm={12}
-            direction="row"
-            alignItems="center"
-            style={{ padding: "18px 0px 0px 0px" }}
+            direction='row'
+            alignItems='center'
+            style={{ padding: '18px 0px 0px 0px' }}
           >
             <GridItem xs={10}>
               <FormControlLabel
@@ -594,7 +634,7 @@ class DesignElement extends React.Component {
                     onChange={(event) =>
                       this.setState({ lastCall: event.target.checked })
                     }
-                    value="lastCall"
+                    value='lastCall'
                     classes={{
                       switchBase: classes.switchBase,
                       checked: classes.switchChecked,
@@ -606,19 +646,22 @@ class DesignElement extends React.Component {
                 classes={{
                   label: classes.label,
                 }}
-                label={<Typography style={{fontSize: "12px"}}>Last Call</Typography>}
+                label={
+                  <Typography style={{ fontSize: '12px' }}>
+                    Last Call
+                  </Typography>
+                }
               />
             </GridItem>
-            
           </GridContainer>
         </GridItem>
         <GridItem xs={12} sm={5}>
           <GridContainer
             xs={12}
             sm={12}
-            direction="row"
-            alignItems="center"
-            style={{ padding: "18px 0px 0px 0px" }}
+            direction='row'
+            alignItems='center'
+            style={{ padding: '18px 0px 0px 0px' }}
           >
             <GridItem xs={10}>
               <FormControlLabel
@@ -628,7 +671,7 @@ class DesignElement extends React.Component {
                     onChange={(event) =>
                       this.setState({ firstCall: event.target.checked })
                     }
-                    value="firstCall"
+                    value='firstCall'
                     classes={{
                       switchBase: classes.switchBase,
                       checked: classes.switchChecked,
@@ -640,20 +683,23 @@ class DesignElement extends React.Component {
                 classes={{
                   label: classes.label,
                 }}
-                label={<Typography style={{fontSize: "12px"}}>First Call</Typography>}
+                label={
+                  <Typography style={{ fontSize: '12px' }}>
+                    First Call
+                  </Typography>
+                }
               />
             </GridItem>
-            
           </GridContainer>
         </GridItem>
         <GridItem xs={12} sm={5}></GridItem>
       </GridContainer>
-    );
+    )
   }
 }
 
 DesignElement.propTypes = {
   classes: PropTypes.object,
-};
+}
 
-export default withStyles(style)(DesignElement);
+export default withStyles(style)(DesignElement)
