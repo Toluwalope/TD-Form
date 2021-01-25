@@ -1,6 +1,6 @@
-import axios from 'axios'
+import axios from "axios";
 
-let SERVER_URL = process.env.REACT_APP_SERVER_URL
+let SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
 export const addFormStepOne = async (
   metaData,
@@ -29,16 +29,16 @@ export const addFormStepOne = async (
         designElement: designElement,
         others: others,
       },
-    })
+    });
 
-    const data = response
-    console.log(data)
-    return data
+    const data = response;
+    console.log(data);
+    return data;
   } catch (error) {
-    console.log(error)
-    return error
+    console.log(error);
+    return error;
   }
-}
+};
 
 export const addFormStepTwo = async (
   formId,
@@ -46,9 +46,9 @@ export const addFormStepTwo = async (
   { method, endpoint }
 ) => {
   try {
-    console.log('competation in method service')
-    console.log(typeof competition)
-    console.log(competition)
+    console.log("competation in method service");
+    console.log(typeof competition);
+    console.log(competition);
 
     // `form/step2/add`
     const response = await axios({
@@ -58,16 +58,16 @@ export const addFormStepTwo = async (
         formId: formId,
         competition: competition,
       },
-    })
+    });
 
     // const response = await axios.post(`${SERVER_URL}api/form/step2/add`, {
     //   formId: formId,
     //   competition: competition,
     // })
-    const data = response
-    return data
+    const data = response;
+    return data;
   } catch (error) {
-    console.log(error)
-    return error
+    console.log(error);
+    return error;
   }
-}
+};

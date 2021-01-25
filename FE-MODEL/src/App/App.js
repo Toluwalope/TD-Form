@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom'
 import './App.css'
 
 import SideMenu from '../components/SideMenu'
@@ -49,7 +49,12 @@ function App() {
     <ThemeProvider theme={theme}>
       <div className={classes.appMain}>
         <BrowserRouter>
-          <Header />
+          <Header
+            projects={projects}
+            setProjects={setProjects}
+            setEditMode={setEditMode}
+            setProjectID={setProjectID}
+          />
           <Switch>
             <Route path='/projects' exact>
               <Projects
@@ -59,13 +64,25 @@ function App() {
                 setProjectID={setProjectID}
               />
             </Route>
-            <Route path='/newproject'>
+            <Route path='/newproject' key='asdf'>
               <Wizard
                 projects={projects}
                 editMode={editMode}
                 setEditMode={setEditMode}
                 projectID={projectID}
               />
+            </Route>
+
+            <Route path='/updateProject/:id' key='234234'>
+              <Wizard
+                projects={projects}
+                editMode={editMode}
+                setEditMode={setEditMode}
+                projectID={projectID}
+              />
+            </Route>
+            <Route path='/'>
+              <Redirect to='/newproject' />
             </Route>
           </Switch>
         </BrowserRouter>

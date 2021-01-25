@@ -43,6 +43,14 @@ class ProjectDetails extends React.Component {
       currencyState: "",
     };
   }
+
+  componentDidMount() {
+    if (this.props.data)
+      this.setState({
+        ...this.props.data,
+      });
+    console.log(this.props);
+  }
   sendState() {
     return this.state;
   }
@@ -83,7 +91,8 @@ class ProjectDetails extends React.Component {
     this.setState({ [stateName]: event.target.value });
   }
   isValidated() {
-    {/* 
+    {
+      /* 
     if (
       this.state.projectTypeState === "success" &&
       this.state.projectSubCategoryState === "success" &&
@@ -101,7 +110,8 @@ class ProjectDetails extends React.Component {
         this.setState({ currencyState: "error" });
       }
     }
-    */}
+    */
+    }
     return true;
   }
 

@@ -49,8 +49,8 @@ const style = {
     top: "10px",
     letterSpacing: "unset",
     "& + $underline": {
-      marginTop: "0px"
-    }
+      marginTop: "0px",
+    },
   },
   genFontStyle: {
     fontSize: "50px",
@@ -84,15 +84,19 @@ class Competition extends React.Component {
           noOfSharesAwarded: "",
 
           disableOnSourceLessThanOne: false,
-
-          
         },
       ],
       basketCount: 0,
     };
   }
-
-
+  componentDidMount() {
+    if (this.props.data)
+      this.setState({
+        baskets: this.props.data.baskets,
+        basketCount: this.props.data.basketCount,
+      });
+    console.log(this.props);
+  }
 
   sendState() {
     return this.state;
@@ -144,26 +148,25 @@ class Competition extends React.Component {
     this.setState({ values });
   };
 
-  toggle = () =>{
+  toggle = () => {
     //const currentState = this.state.details;
-    if(this.state.bmLeader === true) {
+    if (this.state.bmLeader === true) {
       this.setState({ bmLeader: false });
     }
     //this.setState({ bmLeader: false, bmBenchmark: false });
-  }
-  
+  };
+
   handleChangeOnNumberOfNeededSuppliers = () => {
-    if(this.state.noOfNeededSuppliers === 0) {
-      this.setState({disableOnSourceLessThanOne: true})
+    if (this.state.noOfNeededSuppliers === 0) {
+      this.setState({ disableOnSourceLessThanOne: true });
+    } else {
+      this.setState({ disableOnSourceLessThanOne: false });
     }
-    else {
-      this.setState({disableOnSourceLessThanOne: false})
-    }
-  }
+  };
 
   render() {
     const { classes, allStates } = this.props;
-    
+    const { baskets } = this.state;
     return (
       <>
         <GridContainer justify="center">
@@ -171,7 +174,7 @@ class Competition extends React.Component {
             <h4 className={classes.infoText}>How about you add a baskets</h4>
           </GridItem>
 
-          {this.state.baskets.map((basket, key) => (
+          {baskets.map((basket, key) => (
             <GridItem xs={12}>
               <Card style={{ backgroundColor: "#e6e6e6" }}>
                 <CardHeader color="primary" text>
@@ -200,11 +203,9 @@ class Competition extends React.Component {
                               baskets[key].finalTransfer = e.target.value;
                               this.setState({ baskets });
                             }}
-                            
-                            InputLabelProps={{style: {fontSize: 13}}}
+                            InputLabelProps={{ style: { fontSize: 13 } }}
                           />
                         </GridItem>
-                        
                       </GridContainer>
                     </GridItem>
 
@@ -227,10 +228,9 @@ class Competition extends React.Component {
                               baskets[key].averageDistance = e.target.value;
                               this.setState({ baskets });
                             }}
-                            InputLabelProps={{style: {fontSize: 13}}}
+                            InputLabelProps={{ style: { fontSize: 13 } }}
                           />
                         </GridItem>
-                        
                       </GridContainer>
                     </GridItem>
 
@@ -253,10 +253,9 @@ class Competition extends React.Component {
                               baskets[key].deltaFirst = e.target.value;
                               this.setState({ baskets });
                             }}
-                            InputLabelProps={{style: {fontSize: 13}}}
+                            InputLabelProps={{ style: { fontSize: 13 } }}
                           />
                         </GridItem>
-                        
                       </GridContainer>
                     </GridItem>
 
@@ -278,12 +277,10 @@ class Competition extends React.Component {
                               let baskets = [...this.state.baskets];
                               baskets[key].rangeBMScore = e.target.value;
                               this.setState({ baskets });
-
                             }}
-                            InputLabelProps={{style: {fontSize: 13}}}
+                            InputLabelProps={{ style: { fontSize: 13 } }}
                           />
                         </GridItem>
-                        
                       </GridContainer>
                     </GridItem>
 
@@ -306,7 +303,7 @@ class Competition extends React.Component {
                               baskets[key].noSuppliersRFQ = e.target.value;
                               this.setState({ baskets });
                             }}
-                            InputLabelProps={{style: {fontSize: 13}}}
+                            InputLabelProps={{ style: { fontSize: 13 } }}
                           />
                         </GridItem>
                       </GridContainer>
@@ -334,7 +331,7 @@ class Competition extends React.Component {
                                 e.target.value;
                               this.setState({ baskets });
                             }}
-                            InputLabelProps={{style: {fontSize: 13}}}
+                            InputLabelProps={{ style: { fontSize: 13 } }}
                           />
                         </GridItem>
                       </GridContainer>
@@ -357,14 +354,11 @@ class Competition extends React.Component {
                             inputProps={{ min: 0, max: 10 }}
                             value={this.state.baskets[key].noOfNeededSuppliers}
                             onChange={(e) => {
-                              
                               let baskets = [...this.state.baskets];
                               baskets[key].noOfNeededSuppliers = e.target.value;
                               this.setState({ baskets });
-
-                              
                             }}
-                            InputLabelProps={{style: {fontSize: 13}}}
+                            InputLabelProps={{ style: { fontSize: 13 } }}
                           />
                         </GridItem>
                       </GridContainer>
@@ -382,13 +376,19 @@ class Competition extends React.Component {
                           <FormControlLabel
                             control={
                               <Switch
-                                checked={this.state.sourceToMorethanOneSupplier}
-                                onChange={(event) =>
-                                  this.setState({
-                                    sourceToMorethanOneSupplier:
-                                      event.target.checked,
-                                  })
-                                }
+                                checked={basket.sourceToMorethanOneSupplier}
+                                // onChange={(event) =>
+                                //   this.setState({
+                                //     sourceToMorethanOneSupplier:
+                                //       event.target.checked,
+                                //   })
+                                // }
+                                onChange={(e) => {
+                                  let baskets = [...this.state.baskets];
+                                  baskets[key].sourceToMorethanOneSupplier =
+                                    e.target.checked;
+                                  this.setState({ baskets });
+                                }}
                                 value="sourceToMorethanOneSupplier"
                                 classes={{
                                   switchBase: classes.switchBase,
@@ -401,7 +401,11 @@ class Competition extends React.Component {
                             classes={{
                               label: classes.label,
                             }}
-                            label={<Typography style={{fontSize: "12px"}}>Source to More Than 1 Supplier</Typography>}
+                            label={
+                              <Typography style={{ fontSize: "12px" }}>
+                                Source to More Than 1 Supplier
+                              </Typography>
+                            }
                             disabled={this.state.disableOnSourceLessThanOne}
                           />
                         </GridItem>
@@ -420,12 +424,17 @@ class Competition extends React.Component {
                           <FormControlLabel
                             control={
                               <Switch
-                                checked={this.state.bmLeader}
-                                onChange={(event) =>
-                                  this.setState({
-                                    bmLeader: event.target.checked,
-                                  })
-                                }
+                                checked={basket.bmLeader}
+                                // onChange={(event) =>
+                                //   this.setState({
+                                //     bmLeader: event.target.checked,
+                                //   })
+                                // }
+                                onChange={(e) => {
+                                  let baskets = [...this.state.baskets];
+                                  baskets[key].bmLeader = e.target.checked;
+                                  this.setState({ baskets });
+                                }}
                                 value="bmLeader"
                                 classes={{
                                   switchBase: classes.switchBase,
@@ -438,10 +447,13 @@ class Competition extends React.Component {
                             classes={{
                               label: classes.label,
                             }}
-                            label={<Typography style={{fontSize: "12px"}}>Bonus/Penalty Leader Eventual Winner</Typography>}
+                            label={
+                              <Typography style={{ fontSize: "12px" }}>
+                                Bonus/Penalty Leader Eventual Winner
+                              </Typography>
+                            }
                           />
                         </GridItem>
-                       
                       </GridContainer>
                     </GridItem>
 
@@ -457,12 +469,18 @@ class Competition extends React.Component {
                           <FormControlLabel
                             control={
                               <Switch
-                                checked={this.state.bmBenchmark}
-                                onChange={(event) =>
-                                  this.setState({
-                                    bmBenchmark: event.target.checked,
-                                  })
-                                }
+                                checked={this.state.baskets[key].bmBenchmark}
+                                // onChange={(event) =>
+                                //   this.setState({
+                                //     bmBenchmark: event.target.checked,
+                                //   })
+                                // }
+                                //  value={this.state.baskets[key].bmBenchmark}
+                                onChange={(e) => {
+                                  let baskets = [...this.state.baskets];
+                                  baskets[key].bmBenchmark = e.target.checked;
+                                  this.setState({ baskets });
+                                }}
                                 value="bmBenchmark"
                                 classes={{
                                   switchBase: classes.switchBase,
@@ -475,10 +493,13 @@ class Competition extends React.Component {
                             classes={{
                               label: classes.label,
                             }}
-                            label={<Typography style={{fontSize: "12px"}}>Bonus/Penalty Benchmark Shifted</Typography>}
+                            label={
+                              <Typography style={{ fontSize: "12px" }}>
+                                Bonus/Penalty Benchmark Shifted
+                              </Typography>
+                            }
                           />
                         </GridItem>
-                       
                       </GridContainer>
                     </GridItem>
 
@@ -498,7 +519,6 @@ class Competition extends React.Component {
                             options={employeeService.getAverageBMScore()}
                           />
                         </GridItem>
-                        
                       </GridContainer>
                     </GridItem>
 
@@ -518,7 +538,6 @@ class Competition extends React.Component {
                             options={employeeService.getMethodOfNegotiation()}
                           />
                         </GridItem>
-                        
                       </GridContainer>
                     </GridItem>
                     {/*
@@ -567,7 +586,7 @@ class Competition extends React.Component {
                                   baskets[key].shareCount = shareCount;
                                   this.setState({ baskets });
                                 }}
-                                InputLabelProps={{style: {fontSize: 13}}}
+                                InputLabelProps={{ style: { fontSize: 13 } }}
                               />
                             </GridItem>
                             <GridItem xs={1}>

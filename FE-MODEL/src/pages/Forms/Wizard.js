@@ -47,12 +47,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 export default function WizardView(props) {
+  console.log(props, 'asdfasdf')
   const classes = useStyles()
   const [modalStyle] = React.useState(getModalStyle)
   const [open, setOpen] = React.useState(false)
   const [data, setData] = React.useState({})
   const [fieldsData, setFieldsData] = React.useState({})
   const [stepsData, setStepsData] = React.useState({})
+  const [clearState, setClearState] = React.useState(false)
+
   const [dialogData, setDialogData] = React.useState([])
 
   const { sendRequest } = useFetch()
@@ -92,130 +95,73 @@ export default function WizardView(props) {
     //!DO THE BACKEND INTEGRATION HERE
     // console.log(data.props) //showing the state
 
-    try {
-      let metaData = data.props.allStates.metaData
-      let projectDetails = data.props.allStates.metaData
-      let projectTimeline = data.props.allStates.projectTimeline
-      let commercials = data.props.allStates.commercials
-      let commitment = data.props.allStates.commitment
-      let negotiation = data.props.allStates.negotiation
-      let designElement = data.props.allStates.designElement
-      let others = data.props.allStates.others
-      let response = await addFormStepOne(
-        metaData,
-        projectDetails,
-        projectTimeline,
-        commercials,
-        commitment,
-        negotiation,
-        designElement,
-        others,
-        {
-          endpoint: props.editMode ? `update/${props.projectID}` : 'step1/add',
-          method: props.editMode ? 'put' : 'post',
-        }
-      )
+    const { allStates, currentStep } = data.props
 
-      if (response.status === 200) {
-        let id = response.data.response._id
-
-        let unSortedCompetition = data.props.allStates.competition
-        let competition = unSortedCompetition.baskets.map((comp, index) => {
-          let competitions = []
-          //SC FOR SHARE COUNT
-          let sC = []
-          let dataObject = [...comp.shareCount]
-          const result = extractValue(dataObject, 'share')
-          sC.push(result)
-          let resultedObj = {
-            shareCount: [...sC],
-            finalTransfer: comp.finalTransfer,
-            averageDistance: comp.averageDistance,
-            deltaFirst: comp.deltaFirst,
-            bmLeader: comp.ButtonbmLeader,
-            averageBMScore: comp.averageBMScore,
-            rangeBMScore: comp.rangeBMScore,
-            bmBenchmark: comp.bmBenchmark,
-            noSuppliersRFQ: comp.noSuppliersRFQ,
-            noOfSuppliersAdmitted: comp.noOfSuppliersAdmitted,
-            noOfNeededSuppliers: comp.noOfNeededSuppliers,
-            sourceToMorethanOneSupplier: comp.sourceToMorethanOneSupplier,
-            methodOfNegotiation: comp.methodOfNegotiation,
-            noOfSharesAwarded: comp.noOfSharesAwarded,
-          }
-          competitions.push(resultedObj)
-          return competitions
-        })
-
-        if (props.editMode) {
-          let response
-          let newComp = [...fieldsData.competition]
-          for (let i = 0; i < newComp.length; i++) {
-            const competitionItem = newComp[i]
-
-            let shareCount = competitionItem.shareCount
-            let finalTransfer = competitionItem.finalTransfer
-            let averageDistance = competitionItem.averageDistance
-            let deltaFirst = competitionItem.deltaFirst
-            let bmLeader = competitionItem.bmLeader
-            let averageBMScore = competitionItem.averageBMScore
-            let rangeBMScore = competitionItem.rangeBMScore
-            let bmBenchmark = competitionItem.bmBenchmark
-            let noOfSuppliersRFQ = competitionItem.noOfSuppliersRFQ
-            let noOfSuppliersAdmitted = competitionItem.noOfSuppliersAdmitted
-            let noOfNeededSuppliers = competitionItem.noOfNeededSuppliers
-            let sourceToMorethanOneSupplier =
-              competitionItem.sourceToMorethanOneSupplier
-            let methodOfNegotiation = competitionItem.methodOfNegotiation
-            let noOfSharesAwarded = competitionItem.noOfSharesAwarded
-
-            const competationIds = fieldsData.competition.map(
-              (item) => item._id
-            )
-            response = await axios.put(
-              `http://localhost:4000/api/competation/update/${competationIds[i]}`,
-              {
-                finalTransfer,
-                averageDistance,
-                deltaFirst,
-                bmLeader,
-                averageBMScore,
-                bmBenchmark,
-                rangeBMScore,
-                noOfSuppliersRFQ,
-                noOfSuppliersAdmitted,
-                noOfNeededSuppliers,
-                sourceToMorethanOneSupplier,
-                methodOfNegotiation,
-                noOfSharesAwarded,
-              }
-            )
-            console.log(response)
-          }
-
-          if (response.status === 200) {
-            handleClose()
-            alert(response.data.message)
-          }
-        } else {
-          let responseStepTwo = await addFormStepTwo(id, competition, {
-            method: 'post',
-            endpoint: 'form/step2/add',
+    if (allStates.hasOwnProperty('_id')) {
+      try {
+        //update
+        const { competition, ...otherData } = allStates
+        const populatedData = await axios.put(
+          'http://localhost:4000/api/form/update/' + allStates._id,
+          { ...otherData, currentStep }
+        )
+        console.log(currentStep)
+        if (
+          competition &&
+          competition.baskets &&
+          competition.baskets.length > 0
+        ) {
+          await axios.post(`http://localhost:4000/api/form/step2/add`, {
+            formId: allStates._id,
+            competition: competition.baskets,
           })
-          console.log(responseStepTwo.data)
-
-          if (responseStepTwo.status === 200) {
-            handleClose()
-            alert(
-              `Form ${props.editMode ? 'Updated' : 'Saved'} SuccessFully!!!`
+        } else {
+          {
+            await axios.put(
+              'http://localhost:4000/api/form/update/' + allStates._id,
+              { competition: allStates.competition.baskets }
             )
-            return
           }
         }
+
+        handleClose()
+
+        alert('Form update successfully')
+        setClearState(true)
+      } catch (err) {
+        console.log(err.response)
+        alert('Some thing is going wrong')
       }
-    } catch (error) {
-      alert(error)
-      console.log(error)
+    } else {
+      try {
+        //update
+        const { competition, ...otherData } = allStates
+
+        const populatedData = await axios.post(
+          'http://localhost:4000/api/form/step1/add',
+          {
+            ...otherData,
+            currentStep,
+          }
+        )
+        let { response } = populatedData.data
+        if (
+          competition &&
+          competition.baskets &&
+          competition.baskets.length > 0
+        )
+          await axios.post(`http://localhost:4000/api/form/step2/add`, {
+            formId: response._id,
+            competition: competition.baskets,
+          })
+        handleClose()
+        alert('SAVED SUCCESSFULLY, YOU CAN EDIT LATER')
+        setClearState(true)
+
+        console.log(response.data)
+      } catch (err) {
+        console.log(err.response)
+      }
     }
   }
   React.useEffect(() => {
@@ -226,11 +172,14 @@ export default function WizardView(props) {
           'GET'
         )
         console.log(populatedData.response)
+        // debugger;
         setData((oldData) => ({
           ...oldData.props,
           allStates: populatedData.response,
         }))
+
         setFieldsData(populatedData.response)
+        console.log(fieldsData)
       } catch (e) {}
     }
     if (props.editMode) {
@@ -245,45 +194,55 @@ export default function WizardView(props) {
         <Wizard
           stepsData={stepsData}
           setStepsData={setStepsData}
+          setClearState={setClearState}
+          clearState={clearState}
           validate
           steps={[
             {
               stepName: 'Meta Data',
               stepComponent: (props) => (
-                <MetaData data={fieldsData.metaData} {...props} />
+                <MetaData data={props.allStates.metaData} {...props} />
               ),
               stepId: 'metaData',
             },
             {
               stepName: 'Details',
-              stepComponent: (props) => <ProjectDetails {...props} />,
+              stepComponent: (props) => (
+                <ProjectDetails
+                  data={props.allStates.projectDetails}
+                  {...props}
+                />
+              ),
               stepId: 'projectDetails',
             },
             {
               stepName: 'Timeline',
               stepComponent: (props) => (
-                <ProjectTimeline data={fieldsData.projectTimeline} {...props} />
+                <ProjectTimeline
+                  data={props.allStates.projectTimeline}
+                  {...props}
+                />
               ),
               stepId: 'projectTimeline',
             },
             {
               stepName: 'Commercial',
               stepComponent: (props) => (
-                <Commercials data={fieldsData.commercials} {...props} />
+                <Commercials data={props.allStates.commercials} {...props} />
               ),
               stepId: 'commercials',
             },
             {
               stepName: 'Commitment',
               stepComponent: (props) => (
-                <Commitment data={fieldsData.commitment} {...props} />
+                <Commitment data={props.allStates.commitment} {...props} />
               ),
               stepId: 'commitment',
             },
             {
               stepName: 'Competition',
               stepComponent: (props) => (
-                <Competition data={fieldsData.competition} {...props} />
+                <Competition data={props.allStates.competition} {...props} />
               ),
               stepId: 'competition',
             },
@@ -291,21 +250,24 @@ export default function WizardView(props) {
             {
               stepName: 'Negotiation',
               stepComponent: (props) => (
-                <Negotiation data={fieldsData.negotiation} {...props} />
+                <Negotiation data={props.allStates.negotiation} {...props} />
               ),
               stepId: 'negotiation',
             },
             {
               stepName: 'Design',
               stepComponent: (props) => (
-                <DesignElement data={fieldsData.designElement} {...props} />
+                <DesignElement
+                  data={props.allStates.designElement}
+                  {...props}
+                />
               ),
               stepId: 'designElement',
             },
             {
               stepName: 'Others',
               stepComponent: (props) => (
-                <Others data={fieldsData.others} {...props} />
+                <Others data={props.allStates.others} {...props} />
               ),
               stepId: 'others',
             },
@@ -313,6 +275,7 @@ export default function WizardView(props) {
           title=''
           subtitle=''
           finishButtonClick={handleSubmit}
+          {...props}
         />
       </GridItem>
       <OverviewDialog

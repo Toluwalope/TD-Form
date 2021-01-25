@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function Header() {
+export default function Header(props) {
   const classes = useStyles()
 
   return (
@@ -73,6 +73,10 @@ export default function Header() {
               className={classes.marginRight}
               component={Link}
               to='/newproject'
+              onClick={() => {
+                if (props.editMode) props.editMode(false)
+                if (props.projectID) props.projectID(false)
+              }}
             >
               CREATE NEW PROJECT
             </Button>
@@ -82,6 +86,10 @@ export default function Header() {
               className={classes.marginRight}
               component={Link}
               to='/projects'
+              onClick={() => {
+                if (props.editMode) props.editMode(false)
+                if (props.projectID) props.projectID(false)
+              }}
             >
               MY PROJECT
             </Button>

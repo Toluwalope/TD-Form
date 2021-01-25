@@ -1,57 +1,57 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from "react";
+import PropTypes from "prop-types";
 // @material-ui/core components
-import withStyles from '@material-ui/core/styles/withStyles'
+import withStyles from "@material-ui/core/styles/withStyles";
 
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import Switch from '@material-ui/core/Switch'
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Switch from "@material-ui/core/Switch";
 
 // core components
-import CustomInput from '../../../components/CustomInput/CustomInput.js'
-import GridContainer from '../../../components/Grid/GridContainer.js'
-import GridItem from '../../../components/Grid/GridItem.js'
+import CustomInput from "../../../components/CustomInput/CustomInput.js";
+import GridContainer from "../../../components/Grid/GridContainer.js";
+import GridItem from "../../../components/Grid/GridItem.js";
 
-import customSelectStyle from '../../../assets/jss/material-dashboard-pro-react/customSelectStyle.js'
-import customCheckboxRadioSwitch from '../../../assets/jss/material-dashboard-pro-react/customCheckboxRadioSwitch.js'
+import customSelectStyle from "../../../assets/jss/material-dashboard-pro-react/customSelectStyle.js";
+import customCheckboxRadioSwitch from "../../../assets/jss/material-dashboard-pro-react/customCheckboxRadioSwitch.js";
 
-import { Typography } from '@material-ui/core'
+import { Typography } from "@material-ui/core";
 
 const style = {
   infoText: {
-    fontWeight: '300',
-    margin: '10px 0 30px',
-    textAlign: 'center',
+    fontWeight: "300",
+    margin: "10px 0 30px",
+    textAlign: "center",
   },
   inputAdornmentIcon: {
-    color: '#555',
+    color: "#555",
   },
   choiche: {
-    textAlign: 'center',
-    cursor: 'pointer',
-    marginTop: '20px',
+    textAlign: "center",
+    cursor: "pointer",
+    marginTop: "20px",
   },
   ...customSelectStyle,
   ...customCheckboxRadioSwitch,
-}
+};
 
 class Commercials extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       bestInitialTransferPrice: this.props.data
         ? this.props.data.bestInitialTransferPrice
-        : '',
+        : "",
       bestInitialComparisonPrice: this.props.data
         ? this.props.data.bestInitialComparisonPrice
-        : '',
+        : "",
       finalComparisonPrice: this.props.data
         ? this.props.data.finalComparisonPrice
-        : '',
+        : "",
 
       numberOfBaskets: this.props.data ? this.props.data.numberOfBaskets : 0,
       numberOfBasketsState: this.props.data
         ? this.props.data.numberOfBasketsState
-        : '',
+        : "",
 
       shorttermSavingsIncludedInCP: this.props.data
         ? this.props.data.shorttermSavingsIncludedInCP
@@ -59,99 +59,105 @@ class Commercials extends React.Component {
 
       shortTermSavingsYear1: this.props.data
         ? this.props.shortTermSavingsYear1
-        : '',
+        : "",
       shortTermSavingsYear2: this.props.data
         ? this.props.shortTermSavingsYear2
-        : '',
+        : "",
       shortTermSavingsYear3: this.props.data
         ? this.props.shortTermSavingsYear3
-        : '',
+        : "",
       shortTermSavingsYear4: this.props.data
         ? this.props.shortTermSavingsYear4
-        : '',
+        : "",
       shortTermSavingsYear5: this.props.data
         ? this.props.shortTermSavingsYear5
-        : '',
+        : "",
       disable: true,
-    }
+    };
   }
   sendState() {
-    return this.state
+    return this.state;
   }
-
+  componentDidMount() {
+    if (this.props.data)
+      this.setState({
+        ...this.props.data,
+      });
+    console.log(this.props);
+  }
   change(event, stateName, type, stateNameEqualTo) {
-    console.log(this.props)
-    this.setState({ [stateName]: event.target.value })
+    console.log(this.props);
+    this.setState({ [stateName]: event.target.value });
   }
 
   handleSimple = (event) => {
-    this.setState({ [event.target.name]: event.target.value })
-  }
+    this.setState({ [event.target.name]: event.target.value });
+  };
 
   handleShortTermSavingsChange = (event) => {
     if (event.target.checked) {
       this.setState({
         disable: false,
-      })
+      });
     } else {
       this.setState({
-        shortTermSavingsYear1: '',
-        shortTermSavingsYear2: '',
-        shortTermSavingsYear3: '',
-        shortTermSavingsYear4: '',
-        shortTermSavingsYear5: '',
+        shortTermSavingsYear1: "",
+        shortTermSavingsYear2: "",
+        shortTermSavingsYear3: "",
+        shortTermSavingsYear4: "",
+        shortTermSavingsYear5: "",
         disable: true,
-      })
+      });
     }
-    this.setState({ shorttermSavingsIncludedInCP: event.target.checked })
-  }
+    this.setState({ shorttermSavingsIncludedInCP: event.target.checked });
+  };
 
   // function that verifies if value contains only numbers
   verifyNumber = (value) => {
-    var numberRex = new RegExp('^[0-9]+$')
-    var rangeVal = value >= 0 && value <= 10
+    var numberRex = new RegExp("^[0-9]+$");
+    var rangeVal = value >= 0 && value <= 10;
     if (numberRex.test(value) && rangeVal) {
-      return true
+      return true;
     }
-    return false
-  }
+    return false;
+  };
 
   isValidated() {
-    if (this.state.numberOfBasketsState === 'success') {
-      return true
+    if (this.state.numberOfBasketsState === "success") {
+      return true;
     } else {
-      if (this.state.numberOfBasketsState !== 'success') {
-        this.setState({ numberOfBasketsState: 'error' })
+      if (this.state.numberOfBasketsState !== "success") {
+        this.setState({ numberOfBasketsState: "error" });
       }
     }
-    return true
+    return true;
   }
 
   change(event, stateName, type, stateNameEqualTo) {
     switch (type) {
-      case 'number':
+      case "number":
         if (this.verifyNumber(event.target.value)) {
-          this.setState({ [stateName + 'State']: 'success' })
+          this.setState({ [stateName + "State"]: "success" });
         } else {
-          this.setState({ [stateName + 'State']: 'error' })
+          this.setState({ [stateName + "State"]: "error" });
         }
-        break
+        break;
       default:
-        break
+        break;
     }
-    this.setState({ [stateName]: event.target.value })
+    this.setState({ [stateName]: event.target.value });
   }
 
   typeClick = () => {
-    if (this.state.numberOfBasketsState === '') {
-      this.setState({ numberOfBasketsState: 'error' })
+    if (this.state.numberOfBasketsState === "") {
+      this.setState({ numberOfBasketsState: "error" });
     }
-  }
+  };
 
   render() {
-    const { classes, allStates } = this.props
+    const { classes, allStates } = this.props;
     return (
-      <GridContainer justify='center'>
+      <GridContainer justify="center">
         <GridItem xs={12} sm={12}>
           <h4 className={classes.infoText}>
             How about filling in the Commercial section
@@ -159,30 +165,35 @@ class Commercials extends React.Component {
         </GridItem>
 
         <GridItem xs={12} sm={5}>
-          <GridContainer xs={12} sm={12} direction='row' alignItems='center'>
+          <GridContainer xs={12} sm={12} direction="row" alignItems="center">
             <GridItem xs={10}>
               <CustomInput
-                labelText='Best Initial Transfer Price'
-                id='bestInitialTransferPrice'
-                formControlProps={{
-                  fullWidth: true,
-                }}
-              />
-            </GridItem>
-          </GridContainer>
-        </GridItem>
-        <GridItem xs={12} sm={5}>
-          <GridContainer xs={12} sm={12} direction='row' alignItems='center'>
-            <GridItem xs={10}>
-              <CustomInput
-                labelText='Short Term Savings Year 1'
-                id='shortTermSavingsYear1'
+                labelText="Best Initial Transfer Price"
+                id="bestInitialTransferPrice"
                 formControlProps={{
                   fullWidth: true,
                 }}
                 inputProps={{
                   onChange: (event) =>
-                    this.change(event, 'shortTermSavingsYear1', 'length', 3),
+                    this.change(event, "bestInitialTransferPrice", "length", 3),
+                }}
+                value={this.state.bestInitialTransferPrice}
+              />
+            </GridItem>
+          </GridContainer>
+        </GridItem>
+        <GridItem xs={12} sm={5}>
+          <GridContainer xs={12} sm={12} direction="row" alignItems="center">
+            <GridItem xs={10}>
+              <CustomInput
+                labelText="Short Term Savings Year 1"
+                id="shortTermSavingsYear1"
+                formControlProps={{
+                  fullWidth: true,
+                }}
+                inputProps={{
+                  onChange: (event) =>
+                    this.change(event, "shortTermSavingsYear1", "length", 3),
                 }}
                 value={this.state.shortTermSavingsYear1}
                 disabled={this.state.disable}
@@ -192,30 +203,40 @@ class Commercials extends React.Component {
         </GridItem>
 
         <GridItem xs={12} sm={5}>
-          <GridContainer xs={12} sm={12} direction='row' alignItems='center'>
+          <GridContainer xs={12} sm={12} direction="row" alignItems="center">
             <GridItem xs={10}>
               <CustomInput
-                labelText='Best Initial Comparison Price'
-                id='bestInitialComparisonPrice'
-                formControlProps={{
-                  fullWidth: true,
-                }}
-              />
-            </GridItem>
-          </GridContainer>
-        </GridItem>
-        <GridItem xs={12} sm={5}>
-          <GridContainer xs={12} sm={12} direction='row' alignItems='center'>
-            <GridItem xs={10}>
-              <CustomInput
-                labelText='Short Term Savings Year 2'
-                id='shortTermSavingsYear2'
+                labelText="Best Initial Comparison Price"
+                id="bestInitialComparisonPrice"
                 formControlProps={{
                   fullWidth: true,
                 }}
                 inputProps={{
                   onChange: (event) =>
-                    this.change(event, 'shortTermSavingsYear2', 'length', 3),
+                    this.change(
+                      event,
+                      "bestInitialComparisonPrice",
+                      "length",
+                      3
+                    ),
+                }}
+                value={this.state.bestInitialComparisonPrice}
+              />
+            </GridItem>
+          </GridContainer>
+        </GridItem>
+        <GridItem xs={12} sm={5}>
+          <GridContainer xs={12} sm={12} direction="row" alignItems="center">
+            <GridItem xs={10}>
+              <CustomInput
+                labelText="Short Term Savings Year 2"
+                id="shortTermSavingsYear2"
+                formControlProps={{
+                  fullWidth: true,
+                }}
+                inputProps={{
+                  onChange: (event) =>
+                    this.change(event, "shortTermSavingsYear2", "length", 3),
                 }}
                 value={this.state.shortTermSavingsYear2}
                 disabled={this.state.disable}
@@ -225,31 +246,36 @@ class Commercials extends React.Component {
         </GridItem>
 
         <GridItem xs={12} sm={5}>
-          <GridContainer xs={12} sm={12} direction='row' alignItems='center'>
+          <GridContainer xs={12} sm={12} direction="row" alignItems="center">
             <GridItem xs={10}>
               <CustomInput
-                labelText='Final Comparison Price'
-                id='finalComparisonPrice'
+                labelText="Final Comparison Price"
+                id="finalComparisonPrice"
                 formControlProps={{
                   fullWidth: true,
                 }}
+                inputProps={{
+                  onChange: (event) =>
+                    this.change(event, "finalComparisonPrice", "length", 3),
+                }}
+                value={this.state.finalComparisonPrice}
               />
             </GridItem>
           </GridContainer>
         </GridItem>
 
         <GridItem xs={12} sm={5}>
-          <GridContainer xs={12} sm={12} direction='row' alignItems='center'>
+          <GridContainer xs={12} sm={12} direction="row" alignItems="center">
             <GridItem xs={10}>
               <CustomInput
-                labelText='Short Term Savings Year 3'
-                id='shortTermSavingsYear3'
+                labelText="Short Term Savings Year 3"
+                id="shortTermSavingsYear3"
                 formControlProps={{
                   fullWidth: true,
                 }}
                 inputProps={{
                   onChange: (event) =>
-                    this.change(event, 'shortTermSavingsYear3', 'length', 3),
+                    this.change(event, "shortTermSavingsYear3", "length", 3),
                 }}
                 value={this.state.shortTermSavingsYear3}
                 disabled={this.state.disable}
@@ -284,13 +310,13 @@ class Commercials extends React.Component {
         </GridItem>
             */}
 
-        <GridItem xs={12} sm={5} alignContent='center'>
+        <GridItem xs={12} sm={5} alignContent="center">
           <GridContainer
             xs={12}
             sm={12}
-            direction='row'
-            alignItems='center'
-            style={{ padding: '18px 0px 0px 0px' }}
+            direction="row"
+            alignItems="center"
+            style={{ padding: "18px 0px 0px 0px" }}
           >
             <GridItem xs={10}>
               <FormControlLabel
@@ -298,7 +324,7 @@ class Commercials extends React.Component {
                   <Switch
                     checked={this.state.shorttermSavingsIncludedInCP}
                     onChange={this.handleShortTermSavingsChange}
-                    value='shorttermSavingsIncludedInCP'
+                    value="shorttermSavingsIncludedInCP"
                     classes={{
                       switchBase: classes.switchBase,
                       checked: classes.switchChecked,
@@ -311,7 +337,7 @@ class Commercials extends React.Component {
                   label: classes.label,
                 }}
                 label={
-                  <Typography style={{ fontSize: '12px' }}>
+                  <Typography style={{ fontSize: "12px" }}>
                     Short-Term Savings Included in CP
                   </Typography>
                 }
@@ -321,17 +347,17 @@ class Commercials extends React.Component {
         </GridItem>
 
         <GridItem xs={12} sm={5}>
-          <GridContainer xs={12} sm={12} direction='row' alignItems='center'>
+          <GridContainer xs={12} sm={12} direction="row" alignItems="center">
             <GridItem xs={10}>
               <CustomInput
-                labelText='Short Term Savings Year 4'
-                id='shortTermSavingsYear4'
+                labelText="Short Term Savings Year 4"
+                id="shortTermSavingsYear4"
                 formControlProps={{
                   fullWidth: true,
                 }}
                 inputProps={{
                   onChange: (event) =>
-                    this.change(event, 'shortTermSavingsYear4', 'length', 3),
+                    this.change(event, "shortTermSavingsYear4", "length", 3),
                 }}
                 value={this.state.shortTermSavingsYear4}
                 disabled={this.state.disable}
@@ -366,17 +392,17 @@ class Commercials extends React.Component {
 
         <GridItem xs={12} sm={5}></GridItem>
         <GridItem xs={12} sm={5}>
-          <GridContainer xs={12} sm={12} direction='row' alignItems='center'>
+          <GridContainer xs={12} sm={12} direction="row" alignItems="center">
             <GridItem xs={10}>
               <CustomInput
-                labelText='Short Term Savings Year 5'
-                id='shortTermSavingsYear5'
+                labelText="Short Term Savings Year 5"
+                id="shortTermSavingsYear5"
                 formControlProps={{
                   fullWidth: true,
                 }}
                 inputProps={{
                   onChange: (event) =>
-                    this.change(event, 'shortTermSavingsYear5', 'length', 3),
+                    this.change(event, "shortTermSavingsYear5", "length", 3),
                 }}
                 value={this.state.shortTermSavingsYear5}
                 disabled={this.state.disable}
@@ -436,12 +462,12 @@ class Commercials extends React.Component {
         </GridItem>
          */}
       </GridContainer>
-    )
+    );
   }
 }
 
 Commercials.propTypes = {
   classes: PropTypes.object,
-}
+};
 
-export default withStyles(style)(Commercials)
+export default withStyles(style)(Commercials);
