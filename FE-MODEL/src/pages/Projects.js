@@ -72,7 +72,7 @@ const Projects = ({ projects, setProjects, setEditMode, setProjectID }) => {
           id: project._id,
           projectName: project.metaData.projectName,
           updatedAt: moment(project.updatedAt).format('MMM Do YYYY'),
-          currentStep: (project.currentStep / 8) * 100,
+          currentStep: project.currentStep,
         }))
         console.log(newData)
         setProjects(newData)
@@ -102,7 +102,7 @@ const Projects = ({ projects, setProjects, setEditMode, setProjectID }) => {
                 <TableCell>No.</TableCell>
                 <TableCell>Projects</TableCell>
                 <TableCell>Latest Update</TableCell>
-                <TableCell>Completion</TableCell>
+                {/* <TableCell>Completion</TableCell> */}
                 <TableCell>Status</TableCell>
                 <TableCell>Report</TableCell>
                 <TableCell>Action</TableCell>
@@ -115,9 +115,9 @@ const Projects = ({ projects, setProjects, setEditMode, setProjectID }) => {
                   <TableCell>{index + 1}</TableCell>
                   <TableCell>{project.projectName}</TableCell>
                   <TableCell>{project.updatedAt}</TableCell>
-                  <TableCell>{`${Math.ceil(project.currentStep)}%`}</TableCell>
+                  {/* <TableCell>{`${Math.floor(project.currentStep)}%`}</TableCell> */}
                   <TableCell>
-                    {project.currentStep < 100 ? 'In Progress' : 'Completed'}
+                    {project.currentStep < 7 ? 'In Progress' : 'Completed'}
                   </TableCell>
                   <TableCell>
                     <IconButton>
@@ -128,7 +128,7 @@ const Projects = ({ projects, setProjects, setEditMode, setProjectID }) => {
                     <IconButton onClick={deleteItem.bind(this, project.id)}>
                       <DeleteOutlineIcon />
                     </IconButton>
-                    {project.currentStep < 100 && (
+                    {project.currentStep < 7 && (
                       <IconButton onClick={editItem.bind(this, project.id)}>
                         <EditOutlinedIcon />
                       </IconButton>
