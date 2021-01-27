@@ -1,16 +1,17 @@
-import React from "react";
-import Dialog from "@material-ui/core/Dialog";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogActions from "@material-ui/core/DialogActions";
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
-import Grid from "@material-ui/core/Grid";
-import Divider from "@material-ui/core/Divider";
-import moment from "moment";
+import React from 'react'
+import Dialog from '@material-ui/core/Dialog'
+import DialogTitle from '@material-ui/core/DialogTitle'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogActions from '@material-ui/core/DialogActions'
+import Button from '@material-ui/core/Button'
+import Typography from '@material-ui/core/Typography'
+import Grid from '@material-ui/core/Grid'
+import Divider from '@material-ui/core/Divider'
+import moment from 'moment'
+import { useHistory } from 'react-router-dom'
 
 const OverviewDialog = (props) => {
-  console.log(props.stepsData.metaData);
+  console.log(props.stepsData.metaData)
   const {
     metaData,
     projectTimeline,
@@ -18,106 +19,110 @@ const OverviewDialog = (props) => {
     competition,
     negotiation,
     others,
-  } = props.stepsData;
+  } = props.stepsData
+
+  const sendData = () => {
+    props.sendDataToBackend()
+    if (props.projectID || props.editMode) {
+      props.setProjectID('')
+      props.setEditMode(false)
+    }
+  }
 
   return (
     <Dialog open={props.open} onClose={props.onClose} fullWidth>
       <DialogTitle>Overview</DialogTitle>
       <DialogContent>
-        <Grid container direction="column" spacing={2}>
-          <Grid item container justify="space-between">
-            <Typography variant="body1">Project Name</Typography>{" "}
-            <Typography variant="body1">
+        <Grid container direction='column' spacing={2}>
+          <Grid item container justify='space-between'>
+            <Typography variant='body1'>Project Name</Typography>{' '}
+            <Typography variant='body1'>
               {metaData && metaData.projectName}
             </Typography>
           </Grid>
           <Divider />
-          <Grid item container justify="space-between">
-            <Typography variant="body1">Contact</Typography>
-            <Typography variant="body1">
+          <Grid item container justify='space-between'>
+            <Typography variant='body1'>Contact</Typography>
+            <Typography variant='body1'>
               {metaData && metaData.emails.length}
             </Typography>
           </Grid>
           <Divider />
-          <Grid item container justify="space-between">
-            <Typography variant="body1">Hours Support</Typography>
+          <Grid item container justify='space-between'>
+            <Typography variant='body1'>Hours Support</Typography>
 
-            <Typography variant="body1">
+            <Typography variant='body1'>
               {metaData && metaData.hoursSupport}
             </Typography>
           </Grid>
           <Divider />
-          <Grid item container justify="space-between">
-            <Typography variant="body1">Negotiation End Date</Typography>
-            <Typography variant="body1">
+          <Grid item container justify='space-between'>
+            <Typography variant='body1'>Negotiation End Date</Typography>
+            <Typography variant='body1'>
               {projectTimeline &&
                 moment(projectTimeline.negotiationEndDate).format(
-                  "dd MMM YYYY"
+                  'dd MMM YYYY'
                 )}
             </Typography>
           </Grid>
           <Divider />
-          <Grid item container justify="space-between">
-            <Typography variant="body1">
+          <Grid item container justify='space-between'>
+            <Typography variant='body1'>
               Best Initial Comparison Price
             </Typography>
-            <Typography variant="body1">
-              {commercials ? metaData.bestInitialComparisonPrice : ""}
+            <Typography variant='body1'>
+              {commercials ? metaData.bestInitialComparisonPrice : ''}
             </Typography>
           </Grid>
           <Divider />
-          <Grid item container justify="space-between">
-            <Typography variant="body1">Final Comparison Price</Typography>
-            <Typography variant="body1">
-              {commercials ? commercials.finalComparisonPrice : ""}
+          <Grid item container justify='space-between'>
+            <Typography variant='body1'>Final Comparison Price</Typography>
+            <Typography variant='body1'>
+              {commercials ? commercials.finalComparisonPrice : ''}
             </Typography>
           </Grid>
           <Divider />
-          <Grid item container justify="space-between">
-            <Typography variant="body1">Number Of basket</Typography>
-            <Typography variant="body1">
+          <Grid item container justify='space-between'>
+            <Typography variant='body1'>Number Of basket</Typography>
+            <Typography variant='body1'>
               {competition && competition.baskets.length}
             </Typography>
           </Grid>
           <Divider />
-          <Grid item container justify="space-between">
-            <Typography variant="body1">Type Of Negotiation</Typography>
-            <Typography variant="body1">
+          <Grid item container justify='space-between'>
+            <Typography variant='body1'>Type Of Negotiation</Typography>
+            <Typography variant='body1'>
               {negotiation && negotiation.typeOfNegotiation}
             </Typography>
           </Grid>
           <Divider />
-          <Grid item container justify="space-between">
-            <Typography variant="body1">
+          <Grid item container justify='space-between'>
+            <Typography variant='body1'>
               Negotiation Design of Last Conducted Stage
             </Typography>
-            <Typography variant="body1">
+            <Typography variant='body1'>
               {negotiation && negotiation.designOfLastConductedStage}
             </Typography>
           </Grid>
           <Divider />
-          <Grid item container justify="space-between">
-            <Typography variant="body1">Allocation Tool Used</Typography>
-            <Typography variant="body1">
+          <Grid item container justify='space-between'>
+            <Typography variant='body1'>Allocation Tool Used</Typography>
+            <Typography variant='body1'>
               {others && others.allocationToolused}
             </Typography>
           </Grid>
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Button
-          color="primary"
-          onClick={props.sendDataToBackend}
-          variant="contained"
-        >
+        <Button color='primary' onClick={sendData} variant='contained'>
           Save
         </Button>
-        <Button color="secondary" onClick={props.onClose}>
+        <Button color='secondary' onClick={props.onClose}>
           Cancel
         </Button>
       </DialogActions>
     </Dialog>
-  );
-};
+  )
+}
 
-export default OverviewDialog;
+export default OverviewDialog

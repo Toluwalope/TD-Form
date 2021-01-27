@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import Wizard from '../../components/Wizard/Wizard.js'
 import GridContainer from '../../components/Grid/GridContainer.js'
 import GridItem from '../../components/Grid/GridItem.js'
+import { useHistory } from 'react-router-dom'
 
 import MetaData from './WizardSteps/MetaData.js'
 import ProjectDetails from './WizardSteps/ProjectDetails.js'
@@ -57,6 +58,8 @@ export default function WizardView(props) {
   const [clearState, setClearState] = React.useState(false)
 
   const [dialogData, setDialogData] = React.useState([])
+
+  const history = useHistory()
 
   const { sendRequest } = useFetch()
 
@@ -132,6 +135,7 @@ export default function WizardView(props) {
         console.log(err.response)
         alert('Some thing is going wrong')
       }
+      history.push('/projects')
     } else {
       try {
         //update
@@ -162,6 +166,7 @@ export default function WizardView(props) {
       } catch (err) {
         console.log(err.response)
       }
+      history.push('/projects')
     }
   }
   React.useEffect(() => {
@@ -196,6 +201,8 @@ export default function WizardView(props) {
           setStepsData={setStepsData}
           setClearState={setClearState}
           clearState={clearState}
+          editMode={props.editMode}
+          setEditMode={props.setEditMode}
           validate
           steps={[
             {
@@ -284,6 +291,10 @@ export default function WizardView(props) {
         sendDataToBackend={sendDataToBackend}
         dialogData={dialogData}
         stepsData={stepsData}
+        projectID={props.projectID}
+        setProjectID={props.setProjectID}
+        editMode={props.editMode}
+        setEditMode={props.setEditMode}
       />
     </GridContainer>
   )

@@ -73,12 +73,16 @@ function App() {
               />
             </Route>
 
-            <Route path='/updateProject/:id' key='234234'>
+            <Route
+              path={projectID ? '/updateProject/:id' : '/newproject'}
+              key='234234'
+            >
               <Wizard
                 projects={projects}
                 editMode={editMode}
                 setEditMode={setEditMode}
                 projectID={projectID}
+                setProjectID={setProjectID}
               />
             </Route>
             <Route path='/'>

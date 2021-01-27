@@ -72,7 +72,7 @@ const Projects = ({ projects, setProjects, setEditMode, setProjectID }) => {
           id: project._id,
           projectName: project.metaData.projectName,
           updatedAt: moment(project.updatedAt).format('MMM Do YYYY'),
-          currentStep: ((project.currentStep + 1) / 8) * 100,
+          currentStep: (project.currentStep / 8) * 100,
         }))
         console.log(newData)
         setProjects(newData)
@@ -115,7 +115,7 @@ const Projects = ({ projects, setProjects, setEditMode, setProjectID }) => {
                   <TableCell>{index + 1}</TableCell>
                   <TableCell>{project.projectName}</TableCell>
                   <TableCell>{project.updatedAt}</TableCell>
-                  <TableCell>{`${Math.floor(project.currentStep)}%`}</TableCell>
+                  <TableCell>{`${Math.ceil(project.currentStep)}%`}</TableCell>
                   <TableCell>
                     {project.currentStep < 100 ? 'In Progress' : 'Completed'}
                   </TableCell>
